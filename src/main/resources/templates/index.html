@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Movies</title>
+    </head>
+    <body>
+        <form id="movieForm" action="/movies" method="POST">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" required="true" />
+            <br/>
+            <label for="genre">Genre</label>
+            <select id="genre" name="genre" required="true">
+                <option value="">---</option>
+                <option value="Action">Action</option>
+                <option value="Drama">Drama</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Thriller">Thriller</option>
+            </select>
+            <br/>
+            <label for="year">Year</label>
+            <input type="number" id="year" name="year" required="true" />
+            <br/>
+            <button type="submit">Save</button>
+        </form>
+
+        <table id="list">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Year</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <script>
+            const list = document.getElementById('list');
+
+            function renderMovie(movie) {
+                return `
+                    <tr>
+                        <td>${movie.title}</td>
+                        <td>${movie.genre}</td>
+                        <td>${movie.year}</td>
+                    </tr>
+                `;
+            }
+
+            function render() {
+                fetch('/movies')
+                    .then(function(data) {
+                        return data.json();
+                    })
+                    .then(function(movies) {
+                        console.log(movies);
+                        const tbody = list.querySelector('tbody');
+                        let trs = ''
+                        for (let movie of movies) {
+                            trs += renderMovie(movie);
+                        }
+                        tbody.innerHTML = trs;
+                    });
+            }
+
+            window.onload = render;
+
+
+            const form = document.getElementById("movieForm");
+            form.onsubmit = function(evt) {
+                evt.preventDefault();
+                const el = form.elements;
+
+                const movie = {
+                    title: el.title.value,
+                    genre: el.genre.value,
+                    year: el.year.value
+                };
+
+                console.log(movie);
+
+                const headers = new Headers();
+                headers.append('Content-Type', 'application/json');
+
+                fetch('/movies', {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify(movie)
+                }).then(function() {
+                    console.log('ok');
+                    form.reset();
+                    render();
+                });
+            }
+        </script>
+    </body>
+</html>
