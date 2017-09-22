@@ -1,0 +1,110 @@
+<!--Necessário-->
+<!doctype html>
+<html>
+    <head>
+        <!--Se deixar dá erro-->
+        <!--<meta charset="UTF-8">-->
+        <title>Begining</title>
+    </head>
+    <body>
+    <h3>Gravar ponto turístico</h3>
+    <form id="placeForm" action="/places" method="POST">
+        <label for="comment">Comment</label>
+        <input type="text" id="comment" name="comment" required="true" />
+        <br/><br/>
+        <label for="rate">Rate</label>
+        <input type="number" id="rate" name="rate" required="true" />
+        <br/><br/>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required="true" />
+        <br/><br/>
+        <label for="latitude">Latitude</label>
+        <input type="number" id="latitude" name="latitude" required="true" />
+        <br/><br/>
+        <label for="longitude">Longitude</label>
+        <input type="number" id="longitude" name="longitude" required="true" />
+        <br/><br/>
+        <button type="submit">Save</button>
+    </form>
+    </body>
+    <table id = "listPlaces">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Comment</th>
+                <th>Rate</th>
+                <th>Latitude</th>
+                <th>Longiitude</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+            const listPlaces = document.getElementById("listPlaces");
+
+            function renderPlace(place){
+                return `
+                    <tr>
+                        <td>${place.id}<\td>
+                        <td>${place.name}<\td>
+                        <td>${place.comment}<\td>
+                        <td>${place.rate}<\td>
+                        <td>${place.latitude}<\td>
+                        <td>${place.logitude}<\td>
+                    <\tr>
+                `;
+            }
+
+            funcion renderPlaces(){
+                fetch('/places')
+                    .then(function(data){
+                        return data.json();
+                    })
+                    .then(function(places){
+                        console.log(places);
+                        const tbody = listPlaces.querySelect('tbody');
+                        let trs = '';
+                        for(let place of places){
+                            trs += renderPlace(place);
+                        }
+                        tbody.innerHTML = trs;
+                    });
+            }
+
+            window.onload = renderPlaces;
+
+            <!--const form = document.getElementById("placeForm");-->
+            <!--form.onsubmit = function(evt) {-->
+                <!--&lt;!&ndash;Esta linha evita aconteça o comportamento padrão depois da requisição&ndash;&gt;-->
+                <!--&lt;!&ndash;Por exemplo: Impedir que um botão de envio envie um formulário&ndash;&gt;-->
+                <!--evt.preventDefault();-->
+
+                <!--const el = form.elements;-->
+
+                <!--const place = {-->
+                    <!--comment: el.comment.value,-->
+                    <!--rate: el.rate.value,-->
+                    <!--name: el.name.value,-->
+                    <!--latitude: el.latitude.value,-->
+                    <!--longitude: el.longitude-->
+                <!--};-->
+                <!--console.log(place);-->
+
+                <!--const headers = new Headers();-->
+                <!--headers.append('Content-Type', 'application/json');-->
+
+                <!--fetch('/movies', {-->
+                    <!--method: 'POST',-->
+                    <!--headers,-->
+                    <!--body: JSON.stringify(place)-->
+                <!--}).then(function() {-->
+                    <!--console.log('ok');-->
+                    <!--form.reset();-->
+                    <!--&lt;!&ndash;render();&ndash;&gt;-->
+                <!--});-->
+            <!--}-->
+    </script>
+</html>
