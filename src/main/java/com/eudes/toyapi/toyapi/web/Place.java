@@ -13,9 +13,10 @@ import lombok.NoArgsConstructor;
 public class Place {
 
     private long id;
-    private String name;
+    private String placeName;
     private String comment;
     private float rate;
     private float latitude;
     private float longitude;
+
 }

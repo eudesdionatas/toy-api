@@ -2,7 +2,6 @@ package com.eudes.toyapi.toyapi.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MainController {
@@ -12,7 +11,14 @@ public class MainController {
         return "index";
     }
 
-    @RequestMapping("/saveRDF.html")
-    public String saveRDF(){return "saveRDF";}
+    @GetMapping("/saveRDF")
+    public String saveRDF() {
+        return "saveRDF";
+    }
+
+//    @GetMapping("/saveRDF2")
+//    public String saveRDF2() {
+//        return "saveRDF2";
+//    }
 
 }
