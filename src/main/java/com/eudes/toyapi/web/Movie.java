@@ -1,4 +1,4 @@
-package com.eudes.toyapi.toyapi.web;
+package com.eudes.toyapi.web;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

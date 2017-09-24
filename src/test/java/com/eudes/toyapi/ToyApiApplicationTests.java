@@ -1,4 +1,4 @@
-package com.eudes.toyapi.toyapi;
+package com.eudes.toyapi;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

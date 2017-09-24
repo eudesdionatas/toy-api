@@ -1,4 +1,4 @@
-package com.eudes.toyapi.toyapi;
+package com.eudes.toyapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
