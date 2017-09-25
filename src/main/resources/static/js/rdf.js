@@ -3,7 +3,6 @@ const listPlaces = document.getElementById("listPlaces");
 function renderPlace(place){
     return `
         <tr>
-            <td>${place.id}</td>
             <td>${place.placeName}</td>
             <td>${place.comment}</td>
             <td>${place.rate}</td>
@@ -14,6 +13,7 @@ function renderPlace(place){
 }
 
 function renderPlaces(){
+
     fetch('/places')
         .then(function(data){
             return data.json();
@@ -29,7 +29,7 @@ function renderPlaces(){
         });
 }
 
-window.onload = renderPlaces;
+window.onload =  renderPlaces;
 
 const form = document.getElementById("placeForm");
 form.onsubmit = function(evt) {

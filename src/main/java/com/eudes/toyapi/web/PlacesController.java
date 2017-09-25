@@ -23,8 +23,6 @@ public class PlacesController {
     private final String GEO_URI = "http://www.w3.org/2003/01/geo/wgs84_pos#";
     private final DatasetAccessor datasetAccessor;
 
-    private List<Place> places = new ArrayList<>();
-
     public PlacesController() {
         datasetAccessor = DatasetAccessorFactory.createHTTP(fusekiURI);
     }
@@ -40,15 +38,15 @@ public class PlacesController {
 
     @GetMapping
     public ResponseEntity<List<Place>> listAll() {
-
+        List<Place> places = new ArrayList<>();
         Model model = this.datasetAccessor.getModel(graphURI);
         if (model != null && !model.isEmpty()) {
             ResIterator it = model.listSubjects();
             it.forEachRemaining(resource -> {
-                this.places.add(fromResource(resource));
+                places.add(fromResource(resource));
             });
         }
-        return ResponseEntity.ok(this.places);
+        return ResponseEntity.ok(places);
     }
 
     private Place fromResource(Resource resource) {

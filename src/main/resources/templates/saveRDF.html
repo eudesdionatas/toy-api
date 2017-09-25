@@ -1,46 +1,56 @@
 <!--Necessário-->
 <!doctype html>
 <html>
-    <head>
-        <!--Se deixar dá erro-->
-        <!--<meta charset="UTF-8">-->
-        <title>Begining</title>
-    </head>
-    <body>
+<head>
+    <!--Se deixar dá erro-->
+    <!--<meta charset="UTF-8">-->
+    <title>Begining</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
+</head>
+<body>
+<div class="container">
     <h3>Gravar ponto turístico</h3>
     <form id="placeForm" action="/places" method="POST">
-        <label for="comment">Comment</label>
-        <input type="text" id="comment" name="comment" required="true" />
-        <br/><br/>
-        <label for="rate">Rate</label>
-        <input type="number" id="rate" name="rate" required="true" />
-        <br/><br/>
-        <label for="placeName">Name</label>
-        <input type="text" id="placeName" name="placeName" required="true" />
-        <br/><br/>
-        <label for="latitude">Latitude</label>
-        <input type="number" id="latitude" name="latitude" required="true" />
-        <br/><br/>
-        <label for="longitude">Longitude</label>
-        <input type="number" id="longitude" name="longitude" required="true" />
-        <br/><br/>
-        <button type="submit">Save</button>
+        <div class="form-group">
+            <label for="comment">Comment</label>
+            <input type="text" id="comment" name="comment" required="true" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="rate">Rate</label>
+            <input type="number" step="0.1" id="rate" name="rate" required="true" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="placeName">Name</label>
+            <input type="text" id="placeName" name="placeName" required="true" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="latitude">Latitude</label>
+            <input type="number" step="0.1" id="latitude" name="latitude" required="true" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="longitude">Longitude</label>
+            <input type="number" step="0.1" id="longitude" name="longitude" required="true" class="form-control"/>
+        </div>
+        <div class="btn-group float-right">
+            <button type="submit" class="btn btn-dark">Save</button>
+        </div>
     </form>
-    </body>
-    <table id="listPlaces">
-        <thead>
-            <tr>
-                <td>ID</td>
-                <td>Name</td>
-                <td>Comment</td>
-                <td>Rate</td>
-                <td>Latitude</td>
-                <td>Longitude</td>
-            </tr>
+    <table id="listPlaces" class="table table-bordered">
+        <thead class="thead-inverse">
+        <tr>
+            <th>Name</th>
+            <th>Comment</th>
+            <th>Rate</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+        </tr>
         </thead>
         <tbody>
         </tbody>
     </table>
+</div>
 
-    <script src="js/rdf.js"></script>
+<script src="js/rdf.js"></script>
+</body>
 </html>
