@@ -17,6 +17,7 @@ function renderPlaces(){
     fetch('/places')
         .then(function(data){
             return data.json();
+            console.log(data);
         })
         .then(function(places){
             console.log(places);

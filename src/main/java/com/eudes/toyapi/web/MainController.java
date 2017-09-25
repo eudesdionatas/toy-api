@@ -16,9 +16,9 @@ public class MainController {
         return "saveRDF";
     }
 
-//    @GetMapping("/saveRDF2")
-//    public String saveRDF2() {
-//        return "saveRDF2";
-//    }
+    @GetMapping("/MakeModel")
+    public String saveRDF2() {
+        return "makeModel";
+    }
 
 }

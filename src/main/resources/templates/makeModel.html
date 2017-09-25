@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Making Model</title>
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"-->
+          <!--integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>-->
+</head>
+<body>
+    <div>
+        <h4>Making RDF Model</h4>
+        <form id="modelForm">
+            <div style="background-color:red">
+                <label for="uri">URI</label>
+                <input type="text" id="uri" name="uri" required="true" class="form-control"/>
+                <label for="prefix">Prefix</label>
+                <input type="text" id="prefix" name="prefix" required="true" class="form-control"/>
+                <label for="property">Property</label>
+                <input type="text" id="property" name="property" required="true" class="form-control"/>
+                <button onclick="addProperty" id="addProperty">+</button>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-dark">Make Model</button>
+            </div>
+        </form>
+        <button onclick="addVocabulary()" id="addVocabulary">+</button>
+
+    </div>
+
+    <div id="model"></div>
+
+    <script src="js/makeModel.js"></script>
+</body>
+</html>

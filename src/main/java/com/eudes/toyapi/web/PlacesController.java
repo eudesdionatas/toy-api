@@ -46,6 +46,7 @@ public class PlacesController {
                 places.add(fromResource(resource));
             });
         }
+//        model.write(System.out);
         return ResponseEntity.ok(places);
     }
 
