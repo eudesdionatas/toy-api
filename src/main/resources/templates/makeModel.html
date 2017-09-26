@@ -12,21 +12,26 @@
             <div style="background-color:red">
                 <label for="uri">URI</label>
                 <input type="text" id="uri" name="uri" required="true" class="form-control"/>
+
                 <label for="prefix">Prefix</label>
                 <input type="text" id="prefix" name="prefix" required="true" class="form-control"/>
-                <label for="property">Property</label>
-                <input type="text" id="property" name="property" required="true" class="form-control"/>
-                <button onclick="addProperty" id="addProperty">+</button>
-            </div>
-            <div>
-                <button type="submit" class="btn btn-dark">Make Model</button>
+
+                <button id="addVocab">+</button>
             </div>
         </form>
-        <button onclick="addVocabulary()" id="addVocabulary">+</button>
-
+        <button id="addVocabulaty">+</button>
     </div>
 
-    <div id="model"></div>
+    <div id="headerModel">
+        &lt;rdf:RDF<br/>
+        &emsp;xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#<br/>
+    </div>
+    <div id="resourceModel">
+
+    </div>
+    <div id="propertiesModel">
+        &lt;/rdf:RDF&gt;<br/>
+    </div>
 
     <script src="js/makeModel.js"></script>
 </body>

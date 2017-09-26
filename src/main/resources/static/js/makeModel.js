@@ -1,13 +1,27 @@
 const modelForm = document.getElementById("modelForm");
+const buttonAddVocabulary = document.getElementById("addVocab");
+const buttonAddProperty = document.getElementById("addPropertyBtn");
 
-var buttonAddVocabulary = document.getElementById("addVocabulary");
-//buttonAddVocabulary.onClick =
-function addVocabulary(){
+buttonAddVocabulary.addEventListener('click', addVocabulary);
+
+function addVocabulary(evt){
+    evt.preventDefault();
+    var row = getRowVocabulary();
+    document.getElementById("headerModel").insertAdjacentHTML("beforeend",row);
+}
+
+
+function getRowVocabulary(){
     const el = modelForm.elements;
-    var uri = `${el.uri.value}<br/>`;
-    document.getElementById("model").insertAdjacentHTML("beforeend",uri)
-    //document.getElementById("modelForm").innerHTML += uri;
-    modelForm.reset();
+    var row = `&emsp;<a onclick="addInputProperty()" href="#">xmlns:${el.prefix.value}=${el.uri.value}</a><br/>`;
+    return row;
+}
+
+
+function addInputProperty(){
+    var row = getRowVocabulary();
+    var input =  `<input type="text"/>`;
+    row.innerHTML += input;
 
 }
 

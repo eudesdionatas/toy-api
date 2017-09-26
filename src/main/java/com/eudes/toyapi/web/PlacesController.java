@@ -40,13 +40,13 @@ public class PlacesController {
     public ResponseEntity<List<Place>> listAll() {
         List<Place> places = new ArrayList<>();
         Model model = this.datasetAccessor.getModel(graphURI);
+        model.write(System.out);
         if (model != null && !model.isEmpty()) {
             ResIterator it = model.listSubjects();
             it.forEachRemaining(resource -> {
                 places.add(fromResource(resource));
             });
         }
-//        model.write(System.out);
         return ResponseEntity.ok(places);
     }
 
