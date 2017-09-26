@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viweport" content="width-device-width">
     <title>Making Model</title>
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"-->
-          <!--integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>-->
 </head>
 <body>
-    <div>
-        <h4>Making RDF Model</h4>
-        <form id="modelForm">
-            <div style="background-color:red">
-                <label for="uri">URI</label>
-                <input type="text" id="uri" name="uri" required="true" class="form-control"/>
+    <fieldset>
+        <legend>Vocabulários</legend>
+            <label for="uri">URI</label>
+            <input type="text" id="uri" name="uri"/>
+            <label for="prefix">Prefixo</label>
+            <input type="text" id="prefix" name="prefix"/>
+            <button id="addVocab">+ Adicionar</button>
+        <pre>
+            <code id="vocabList"></code>
+        </pre>
+    </fieldset>
+    <fieldset>
+        <legend>
+            <label for="propPrefix">Prefixo</label>
+            <select id="propPrefix">
 
-                <label for="prefix">Prefix</label>
-                <input type="text" id="prefix" name="prefix" required="true" class="form-control"/>
-
-                <button id="addVocab">+</button>
-            </div>
-        </form>
-        <button id="addVocabulaty">+</button>
-    </div>
-
-    <div id="headerModel">
-        &lt;rdf:RDF<br/>
-        &emsp;xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#<br/>
-    </div>
-    <div id="resourceModel">
-
-    </div>
-    <div id="propertiesModel">
-        &lt;/rdf:RDF&gt;<br/>
-    </div>
-
-    <script src="js/makeModel.js"></script>
+            </select>
+            <label for="propName">Nome</label>
+            <input type="text" id="propName"/>
+            <button id="addProp">+Adicionar</button>
+            <pre>
+                <code id="propList"></code>
+            </pre>
+        </legend>
+    </fieldset>
+    <pre>
+        <code id="result"></code>
+    </pre>
 </body>
 </html>

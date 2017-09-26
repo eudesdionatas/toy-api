@@ -1,28 +1,56 @@
-const modelForm = document.getElementById("modelForm");
-const buttonAddVocabulary = document.getElementById("addVocab");
-const buttonAddProperty = document.getElementById("addPropertyBtn");
+(
+    function(){
+        const vocabs = [];
+        const props = [];
+        const uri = document.getElementById("uri");
+        const prefix = document.getElementById('prefix');
+        const addVocab = document.getElementById('addVocab');
+        const vocabList = document.getElementById('vocabList');
+        const propPrefix = document.getElementById('propPrefix');
+        const propName = document.getElementById('propName');
+        const addProp = document.getElementById('addProp');
+        const result = document.getElementById('result');
 
-buttonAddVocabulary.addEventListener('click', addVocabulary);
+        addVocab.addEventListener("click", function(){
+            vocabs.push({
+                uri: uri.value,
+                prefix: prefix.value
+            });
+            vocabList.innerText = JSON.stringify(vocabs, null, 2);
+            updatePrefixList();
+            updateResult();
+        });
 
-function addVocabulary(evt){
-    evt.preventDefault();
-    var row = getRowVocabulary();
-    document.getElementById("headerModel").insertAdjacentHTML("beforeend",row);
-}
+        function updatePrefixList(){
+            cont options = vocabs.map(function(vocab){
+                return `<option value="${vocab.prefix}">${vocab.prefix}</option>`;
+            });
+            propPrefix.innerHTML = options;
+        }
 
+//        const renderOption = ({prefix}) => `<option value="${prefix}">${prefix}</option>`
+//        const updatePrefixList = () => {
+//            const options = vocabs.map(renderOption);
+//            propPrefix.innerHTML = options;
+//        }
 
-function getRowVocabulary(){
-    const el = modelForm.elements;
-    var row = `&emsp;<a onclick="addInputProperty()" href="#">xmlns:${el.prefix.value}=${el.uri.value}</a><br/>`;
-    return row;
-}
+        addProp.addEventListener("click", function(){
+            props.push({
+                prefix: propPrefix.value,
+                name: propName.value
+            })
+            propList.innerText = JSON.stringify(props, null, 2);
+            updateResult();
+        });
 
+        function updateResult(){
+//            const prefixes = vocabs.map(function(vocab){
+//                return `xmlns:${vocab}`
+//            })
+//http://jsbin.com/kazulumide/edit?js
+        }
 
-function addInputProperty(){
-    var row = getRowVocabulary();
-    var input =  `<input type="text"/>`;
-    row.innerHTML += input;
-
-}
-
+    }
+()
+)
 
