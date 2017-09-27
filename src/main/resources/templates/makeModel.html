@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viweport" content="width-device-width">
+    <meta charset="utf-8"/>
+    <meta name="viweport" content="width-device-width"/>
     <title>Making Model</title>
 </head>
 <body>
     <fieldset>
         <legend>Vocabulários</legend>
-            <label for="uri">URI</label>
-            <input type="text" id="uri" name="uri"/>
-            <label for="prefix">Prefixo</label>
-            <input type="text" id="prefix" name="prefix"/>
-            <button id="addVocab">+ Adicionar</button>
+        <label for="uri">URI</label>
+        <input type="text" id="uri" name="uri"/>
+        <label for="prefix">Prefixo</label>
+        <input type="text" id="prefix" name="prefix"/>
+        <button id="addVocab">+ Adicionar</button>
         <pre>
             <code id="vocabList"></code>
         </pre>
     </fieldset>
     <fieldset>
-        <legend>
-            <label for="propPrefix">Prefixo</label>
-            <select id="propPrefix">
+        <legend>Prefixos</legend>
+        <label for="propPrefix">Prefixo</label>
+        <select id="propPrefix">
+        </select>
+        <label for="propName">Nome</label>
+        <input type="text" id="propName"/>
+        <button id="addProp">+Adicionar</button>
+        <pre>
+            <code id="propList"></code>
+        </pre>
 
-            </select>
-            <label for="propName">Nome</label>
-            <input type="text" id="propName"/>
-            <button id="addProp">+Adicionar</button>
-            <pre>
-                <code id="propList"></code>
-            </pre>
-        </legend>
     </fieldset>
     <pre>
         <code id="result"></code>
     </pre>
+    <script src="js/makeModel.js"></script>
 </body>
 </html>

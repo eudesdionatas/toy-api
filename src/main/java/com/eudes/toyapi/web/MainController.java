@@ -1,7 +1,9 @@
 package com.eudes.toyapi.web;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class MainController {
@@ -11,7 +13,7 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/saveRDF")
+    @GetMapping("/SaveRDF")
     public String saveRDF() {
         return "saveRDF";
     }
@@ -20,5 +22,12 @@ public class MainController {
     public String saveRDF2() {
         return "makeModel";
     }
+
+    @GetMapping("/SaveFromModelRDF")
+    public String saveRDF3() {
+        return "saveFromModelRDF";
+    }
+
+
 
 }

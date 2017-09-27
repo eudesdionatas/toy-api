@@ -43,8 +43,8 @@ public class PlacesController {
         model.write(System.out);
         if (model != null && !model.isEmpty()) {
             ResIterator it = model.listSubjects();
-            it.forEachRemaining(resource -> {
-                places.add(fromResource(resource));
+            it.forEachRemaining(resource2 -> {
+                places.add(fromResource(resource2));
             });
         }
         return ResponseEntity.ok(places);
