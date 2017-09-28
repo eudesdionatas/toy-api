@@ -10,5 +10,5 @@ public class Vocabulary {
 
     private String uri;
     private String prefix;
-    private List<Property> properties = new ArrayList<>();
+    private List<Pair> pairs = new ArrayList<>();
 }

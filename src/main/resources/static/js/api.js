@@ -37,22 +37,42 @@
 //            console.log('ok');
 //        });
 
-        //Criando recurso
         var recurso = {};
+        recurso.about = 'http://teste.com/';
+        recurso.vocabularies = [];
 
-        vocabs = [];
 
-        //Criando vocabulário
-        vocabs.push({
-                      uri: 'http://purl.org/stuff/rev#',
-                      prefix: 'rev'});
-        vocabs.push({
-                      uri:'http://xmlns.com/foaf/0.1/',
-                      prefix: 'foaf'});
+        vocab = {uri: 'http://xmlns.com/foaf/0.1/', prefix: 'foaf'}
+        var pares = [];
+        for(i = 0; i < 5; i++){
+          pares.push({ propertyName: 'Propriedade FOAF' + i, value: 'Valor FOAF' + i });
+        }
+        vocab.pairs = pares;
+        recurso.vocabularies.push(vocab);
 
-        recurso.vocabularies = vocabs;
+        vocab = {uri: 'http://purl.org/stuff/rev#', prefix: 'rev'}
+        pares = [];
+        for(i = 0; i < 5; i++){
+          pares.push({ propertyName: 'Propriedade REV' + i, value: 'Valor REV' + i });
+        }
+        vocab.pairs = pares;
+        recurso.vocabularies.push(vocab);
 
+        json_text = JSON.stringify(recurso);
         console.log(recurso);
+        console.log(json_text);
+
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        fetch('/saveResource/process', {
+            method: 'POST',
+            headers,
+            body: json_text
+        }).then(function() {
+            console.log('ok');
+        });
+
 
 }()
 )
