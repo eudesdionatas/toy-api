@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
-/**
- * Created by Eudes on 27/09/2017.
- */
 @RestController
 @RequestMapping(value = "/saveResource")
 public class MakeModelController {
