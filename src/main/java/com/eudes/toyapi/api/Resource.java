@@ -13,6 +13,8 @@ import java.util.List;
 public class Resource {
 
     private String about;
+    private String prefix;
+    private String name;
     List<Vocabulary> vocabularies = new ArrayList<>();
 
 }

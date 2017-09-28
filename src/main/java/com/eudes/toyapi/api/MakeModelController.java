@@ -22,12 +22,12 @@ public class MakeModelController {
     private final String graphURI = "/Teste";
     private DatasetAccessor datasetAccessor = null;
 
-    MakeModelController(){
+    MakeModelController() {
         datasetAccessor = DatasetAccessorFactory.createHTTP(fusekiURI);
     }
 
     @PostMapping("/process")
-    public ResponseEntity process(@RequestBody Resource resource){
+    public ResponseEntity process(@RequestBody Resource resource) {
         Model model = createModel(resource);
         addAsResource(model, resource);
         datasetAccessor.add(graphURI, model);
@@ -36,14 +36,16 @@ public class MakeModelController {
     }
 
     private void addAsResource(Model model, Resource resource) {
+        String about = resource.getAbout();
+        if (!about.endsWith("/")) about += "/";
 
-        org.apache.jena.rdf.model.Resource r = ResourceFactory.createResource(resource.getAbout());
-        r = model.createResource(getResourceURI(resource),r);
-        for(Vocabulary v: resource.getVocabularies()){
-            for(Pair p: v.getPairs()){
+        org.apache.jena.rdf.model.Resource resourceDefiniton = ResourceFactory.createResource(about +  resource.getName());
+        org.apache.jena.rdf.model.Resource resourceInstance = model.createResource(getResourceURI(resource), resourceDefiniton);
+        for (Vocabulary v : resource.getVocabularies()) {
+            for (Pair p : v.getPairs()) {
                 String propertyName = p.getPropertyName();
-                Property pPropertyName = ResourceFactory.createProperty(v.getUri(),p.getValue());
-                r.addProperty(pPropertyName, p.getValue());
+                Property pPropertyName = ResourceFactory.createProperty(v.getUri(), propertyName);
+                resourceInstance.addProperty(pPropertyName, p.getValue());
             }
         }
 
@@ -55,7 +57,8 @@ public class MakeModelController {
 
     private Model createModel(Resource resource) {
         Model model = ModelFactory.createDefaultModel();
-        for (Vocabulary v: resource.getVocabularies()){
+        model.setNsPrefix(resource.getPrefix(), resource.getAbout());
+        for (Vocabulary v : resource.getVocabularies()) {
             model.setNsPrefix(v.getPrefix(), v.getUri());
         }
         return model;

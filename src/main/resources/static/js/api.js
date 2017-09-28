@@ -37,15 +37,18 @@
 //            console.log('ok');
 //        });
 
-        var recurso = {};
-        recurso.about = 'http://teste.com/';
-        recurso.vocabularies = [];
+        var recurso = {
+            about: 'http://teste.com/',
+            prefix: 'teste',
+            name: 'Coisinha',
+            vocabularies: []
+        };
 
 
         vocab = {uri: 'http://xmlns.com/foaf/0.1/', prefix: 'foaf'}
         var pares = [];
         for(i = 0; i < 5; i++){
-          pares.push({ propertyName: 'Propriedade FOAF' + i, value: 'Valor FOAF' + i });
+          pares.push({ propertyName: 'PropriedadeFOAF' + i, value: 'Valor FOAF' + i });
         }
         vocab.pairs = pares;
         recurso.vocabularies.push(vocab);
@@ -53,7 +56,7 @@
         vocab = {uri: 'http://purl.org/stuff/rev#', prefix: 'rev'}
         pares = [];
         for(i = 0; i < 5; i++){
-          pares.push({ propertyName: 'Propriedade REV' + i, value: 'Valor REV' + i });
+          pares.push({ propertyName: 'PropriedadeREV' + i, value: 'Valor REV' + i });
         }
         vocab.pairs = pares;
         recurso.vocabularies.push(vocab);
