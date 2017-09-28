@@ -18,8 +18,8 @@ import java.util.UUID;
 @RequestMapping(value = "/saveResource")
 public class MakeModelController {
 
-    private final String fusekiURI = "http://localhost:3030/";
-    private final String graphURI = "/Teste";
+    private final String fusekiURI = "http://localhost:3030/Teste";
+    private final String graphURI = "/coisinhas";
     private DatasetAccessor datasetAccessor = null;
 
     MakeModelController() {
