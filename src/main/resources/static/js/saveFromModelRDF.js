@@ -1,23 +1,27 @@
 (
     function() {
+
       //Pega o primeiro formulário da página e atrabui a uma variável 'resForm'
       const resForm = document.forms[0]
+
       //Pega os botões da página e atrabui a uma variável
       const addVocabButton = document.getElementById('addVocab')
       const addPropButton = document.getElementById('addProp')
       const saveButton = document.getElementById('save')
+
       //Pega a tag <pre> de id result e atrabui a uma variável 'result'
       const result = document.getElementById('result')
-      //Pega o campo de colocar a URI do recuro e atribui a uma variável 'resAboutField'
 
+      //Pega os campos de inserir os dados do recuro e atribui e atribui a variáveis
       const resPrefixField = document.getElementById('resPrefix')
       const resNameField = document.getElementById('resName')
       const resAboutField = document.getElementById('resAbout')
 
-      //Pega o campo de colocar a URI do vocabulário e atribui a uma variável 'vocabURIField'
+      //Pega os campos de inserir os dados do vocabulário e atribui e atribui a variáveis
       const vocabURIField = document.getElementById('vocabUri')
       const vocabPrefixField = document.getElementById('vocabPrefix')
 
+      //Pega os campos de inserir os dados da propriedades e atribui e atribui a variáveis
       const propPrefixField = document.getElementById('propPrefix')
       const propNameField = document.getElementById('propName')
       const propValueField = document.getElementById('propValue')
@@ -28,12 +32,15 @@
         vocabularies: {}
       }
 
+      //Muda o comportamento padrão da tooltip que é ser mostrada apenas quando se passa o mouse por cima do elemento
       $('[data-toggle="tooltip"]').tooltip({ trigger: 'manual' })
 
+      //Insere ou remove a classe de erro do css do bootstrap
       function toggleValid(elem, valid) {
         valid ? elem.classList.remove('has-error') : elem.classList.add('has-error')
       }
 
+      //Verifica se a função é válida
       function isValidURL(uri){
         if (uri === '') return false;
         //Expressão regular para validar uma URL
@@ -42,41 +49,54 @@
         return regexp.test(uri);
       }
 
+      //Verifica se a string passada é vazia
       function isEmpty(value) {
         return value == null || value.trim() === ''
       }
 
+      //Verifica se a string não é vazia
       function isNotEmpty(value) {
         return !isEmpty(value)
       }
 
+      //Função que valida o valor do campo que a chamou
       function validateField(validationFunc) {
         return function(evt) {
-           //Verifica se a URL é válida
+           //Pega o elemento que disparou a função
            const elem = evt.target
+           //Verifica se a URL é válida
            const valid = validationFunc(elem.value)
+           //Configura o valor do elemento com válido
            toggleValid(elem, valid)
+           //Configura o estado da tooltip para ser mostrada ou escondida
            const tooltipAction = !valid ? 'show' : 'hide'
+           //Apresenta o esconde a tooltip
            $(elem).tooltip(tooltipAction);
          }
       }
 
-      //Trata o evento de 'perder o foco' do campo de inserir a URI do recurso
+      //Trata o evento de 'perder o foco' do campo de inserir a URI do recurso, validando-o
       resAboutField.onblur = validateField(isValidURL)
 
-      //Trata o evento de 'perder o foco' do campo de inserir a URI do vocabulário
+      //Trata o evento de 'perder o foco' do campo de inserir a URI do vocabulário, validando-o
       vocabURIField.onblur = validateField(isValidURL)
 
+      //Trata o evento de 'perder o foco' do campo de prefixo do vocabulário, validando-o
       vocabPrefixField.onblur = validateField(isNotEmpty)
 
+      //Trata o evento de 'perder o foco' do campo de nome da propriedade, validando-o
       propNameField.onblur = validateField(isNotEmpty)
 
+      //Trata o evento de 'perder o foco' do campo de valor da propriedade, validando-o
       propValueField.onblur = validateField(isNotEmpty)
 
+      //Trata o evento de 'perder o foco' do campo de inserir o prefixo do recurso passando a referência da função showResource para o evento 'onblur'
       resPrefixField.onblur = showResource
 
+      //Trata o evento de 'perder o foco' do campo de inserir a URI do recurso passando a referência da função showResource para o evento 'onblur'
       resAboutField.onblur = showResource
 
+      //Trata o evento de 'perder o foco' do campo de inserir o nome do recurso passando a referência da função showResource para o evento 'onblur'
       resNameField.onblur = showResource
 
       //Trata o evento de clique do botão de adicionar vocabulários 'addVocabButton'
@@ -111,6 +131,7 @@
         //Pega o valor do campo de id 'propValue' do primeiro formulário e atrabui a uma variável 'value'
         const value = propValueField.value
 
+        //Sai da função se algum campo 'prefix', 'propertyName' ou 'value' for vazio
         if (isEmpty(prefix) || isEmpty(propertyName) || isEmpty(value)) return
 
        //Cria objeto pair com um variáveis 'name' e 'value'
@@ -134,20 +155,26 @@
         //Mostra o recurso na tag '<pre>' de id 'result'
         showResource()
         //Envia a cópia do recurso
-
         sendResource()
+        result.innerHTML += '<br/><br/><h3>Recurso salvo com sucesso</h3>'
       }
 
+      //Verifica se os campos de URI do recurso e vocabulário são válidos e
+      //se os campos de prefixo do vocabulário, nome da propriedade e valor da propriedade não são vazios
       function validateForm(){
-           return isValidURL(resAboutField.value) && isValidURL(vocabURIField.value)
+           return isValidURL(resAboutField.value) && isValidURL(vocabURIField.value) &&
+                  isNotEmpty(vocabPrefixField.value) && isNotEmpty(propNameField.value) && isNotEmpty(propValueField.value)
       }
 
       //Função para mostrar o recurso na tag '<pre>' de id 'result'
       function showResource() {
+        //Atualiza os dados do recurso para mostrar
         updateResource()
+        //Mostra o RDF
         showRDF()
       }
 
+      //Atualiza os valores do recurso
       function updateResource(){
         //Pega o valor do campo de id 'resPrefix' do primeiro formulário e atrabui a uma variável 'prefix'
         const prefix = resPrefixField.value
@@ -166,12 +193,14 @@
         Object.assign(resource, { prefix, name, about })
       }
 
+      //Envia o recurso
       function sendResource() {
         //Faz uma cópia do resultado e atrabui à variávek resToShow
         const resToSend = getResourceToSend()
         //Envia a cópia do recurso
 
         console.log(resToSend)
+        //Envia o conteúdo ao servidor
         fetch('/saveResource/process', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json; charset=utf-8'},
@@ -179,6 +208,7 @@
         })
       }
 
+      //Faz um recurso para ser enviado
       function getResourceToSend() {
         //Pega a lista de valores dos vocabulários do recurso
         const vocabularies = Object.values(resource.vocabularies)
@@ -205,24 +235,33 @@
         resForm.elements.propPrefix.innerHTML = options
       }
 
+        //Mostra o RDF, essa função é chamada para montar o conteúdo a ser mostrado na tag '<pre>'
         const showRDF = () => {
+            //Pega um recurso a ser enviado
             const resToSend = getResourceToSend();
+            //Monta a string que mostra todos os vocabulários usados
             let vocabularies = resToSend.vocabularies.map(vocab => `xmlns:${vocab.prefix}="${vocab.uri}"`).join("\n    ");
+            //Cria uma variável que vai ser usada para guardar todas as propriedades de todos os vabulários usados
             let props = [];
+            //Adiciona um prefixo a cada par de valores com o mesmo prefixo do vocabulário
             for (let vocab of resToSend.vocabularies) {
                 const pairs = vocab.pairs.map(pair =>
                     Object.assign({}, pair, { prefix: vocab.prefix })
                 )
+                //Adiciona o par (agora com o prefixo) à lista de propriedades
                 props = props.concat(pairs)
             }
 
+            //Monta a string que mostra todas a propriedades usadas
             const propsString = props
                 .map(prop => `<${prop.prefix}:${prop.propertyName}>${prop.value}</${prop.prefix}:${prop.propertyName}>`)
                 .join("\n        ")
 
+            //Verifica se o prefixo do recurso ou seu nome não são vazios e adiciona à lista de vocabulários
             if (!isEmpty(resource.prefix) && !isEmpty(resource.name)) {
                 vocabularies = `xmlns:${resource.prefix}="${resource.about}"\n    ` + vocabularies
             }
+            //Verifica se o nome do recurso é vazio e apresenta 'rdf:Desciption' se for
             const rootNode = isEmpty(resource.name) ? 'rdf:Description' : `${resource.prefix}:${resource.name}`
 
             const rdf = `
@@ -235,6 +274,7 @@
     </${rootNode}>
 </rdf>`;
 
+            //Deve ser usado innerText para apresentar o texto e não o html na página
             result.innerText = rdf;
         }
 
