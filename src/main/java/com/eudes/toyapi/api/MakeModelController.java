@@ -28,30 +28,33 @@ public class MakeModelController {
 
     @PostMapping("/process")
     public ResponseEntity process(@RequestBody Resource resource) {
+        resource.setAbout(normalizeURI(resource.getAbout()));
         Model model = createModel(resource);
         addAsResource(model, resource);
-        datasetAccessor.add(graphURI, model);
         model.write(System.out);
+        datasetAccessor.add(graphURI, model);
         return ResponseEntity.ok(null);
     }
 
     private void addAsResource(Model model, Resource resource) {
-        String about = resource.getAbout();
-        if (!about.endsWith("/")) about += "/";
-
-        org.apache.jena.rdf.model.Resource resourceDefiniton = ResourceFactory.createResource(about +  resource.getName());
-        org.apache.jena.rdf.model.Resource resourceInstance = model.createResource(getResourceURI(resource), resourceDefiniton);
+        org.apache.jena.rdf.model.Resource resourceDefiniton = ResourceFactory
+                .createResource(resource.getAbout() +  resource.getName());
+        org.apache.jena.rdf.model.Resource resourceInstance = model.createResource(getResourceID(resource), resourceDefiniton);
         for (Vocabulary v : resource.getVocabularies()) {
             for (Pair p : v.getPairs()) {
                 String propertyName = p.getPropertyName();
-                Property pPropertyName = ResourceFactory.createProperty(v.getUri(), propertyName);
+                Property pPropertyName = ResourceFactory.createProperty(normalizeURI(v.getUri()), propertyName);
                 resourceInstance.addProperty(pPropertyName, p.getValue());
             }
         }
 
     }
 
-    private String getResourceURI(Resource resource) {
+    private String normalizeURI(String uri) {
+        return (uri.endsWith("/") || uri.endsWith("#")) ? uri : uri + "/";
+    }
+
+    private String getResourceID(Resource resource) {
         return resource.getAbout() + UUID.randomUUID();
     }
 
@@ -59,7 +62,7 @@ public class MakeModelController {
         Model model = ModelFactory.createDefaultModel();
         model.setNsPrefix(resource.getPrefix(), resource.getAbout());
         for (Vocabulary v : resource.getVocabularies()) {
-            model.setNsPrefix(v.getPrefix(), v.getUri());
+            model.setNsPrefix(v.getPrefix(), normalizeURI(v.getUri()));
         }
         return model;
     }

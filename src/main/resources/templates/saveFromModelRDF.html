@@ -3,8 +3,70 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Saving RDF</title>
+    <link rel="stylesheet" type="text/css" href="css/saveFromModelRDF.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 </head>
 <body>
-<script src="js/api.js"></script>
+<h3 align="center">Criando e salvando instância de ontologia</h3>
+<div class="container">
+    <form id="resForm">
+        <div class="row">
+            <h4>Recurso</h4>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="resPrefix" placeholder="prefixo" data-toggle="tooltip" title="Insira um valor"/>
+                    <span class="input-group-addon">about</span>
+                    <input type="text" class="form-control" id="resAbout" placeholder="http://www.fre.dg/" data-toggle="tooltip" title="As URIs devem ser válidas: http://... terminando com / ou #"/>
+                    <span class="input-group-addon">#</span>
+                    <input type="text" class="form-control" id="resName" placeholder="nome"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h4>Vocabulários</h4>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">xmlns:</span>
+                    <input type="text" class="form-control" id="vocabPrefix" placeholder="prefixo" data-toggle="tooltip" title="Insira um valor"/>
+                    <span class="input-group-addon">=</span>
+                    <input type="text" class="form-control" id="vocabUri" placeholder="http://www.foo.tz/" data-toggle="tooltip" title="As URIs devem ser válidas: http://... terminando com / ou #"/>
+                    <span class="input-group-btn">
+                        <button type="button" id="addVocab" class="btn btn-secondary">
+                          <span class="glyphicon glyphicon-plus"/>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h4>Propriedades</h4>
+            <div class="form-group">
+                <div class="input-group">
+                    <select class="form-control" id="propPrefix"></select>
+                    <div class="input-group-addon">:</div>
+                    <input type="text" class="form-control" id="propName" placeholder="nome" data-toggle="tooltip" title="Insira um valor"/>
+                    <div class="input-group-addon">=</div>
+                    <input type="text" class="form-control" id="propValue" placeholder="valor" data-toggle="tooltip" title="Insira um valor"/>
+                    <div class="input-group-btn">
+                        <button type="button" id="addProp" class="btn btn-secondary">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button type="button" id="save" class="btn btn-secondary btn-lg">
+                <span class="glyphicon glyphicon-upload"></span>
+                Salvar
+            </button>
+        </div>
+    </form>
+    <pre id="result"></pre>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="js/saveFromModelRDF.js"></script>
 </body>
 </html>
