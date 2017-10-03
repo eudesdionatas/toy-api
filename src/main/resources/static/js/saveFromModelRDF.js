@@ -76,7 +76,8 @@
       }
 
       //Trata o evento de 'perder o foco' do campo de inserir a URI do recurso, validando-o
-      resAboutField.onblur = validateField(isValidURL)
+      //Usa .addEventListener para adidionar mais de uma função ao mesmo evento
+      resAboutField.addEventListener('blur', validateField(isValidURL), false)
 
       //Trata o evento de 'perder o foco' do campo de inserir a URI do vocabulário, validando-o
       vocabURIField.onblur = validateField(isValidURL)
@@ -94,7 +95,8 @@
       resPrefixField.onblur = showResource
 
       //Trata o evento de 'perder o foco' do campo de inserir a URI do recurso passando a referência da função showResource para o evento 'onblur'
-      resAboutField.onblur = showResource
+      //Usa .addEventListener para adidionar mais de uma função ao mesmo evento
+      resAboutField.addEventListener('blur', showResource, false)
 
       //Trata o evento de 'perder o foco' do campo de inserir o nome do recurso passando a referência da função showResource para o evento 'onblur'
       resNameField.onblur = showResource
