@@ -158,7 +158,6 @@
         showResource()
         //Envia a cópia do recurso
         sendResource()
-        result.innerHTML += '<br/><br/><h3>Recurso salvo com sucesso</h3>'
       }
 
       //Verifica se os campos de URI do recurso e vocabulário são válidos e
@@ -207,7 +206,16 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json; charset=utf-8'},
           body: JSON.stringify(resToSend)
-        })
+        }).then(function(status) {
+          //Verifica se o status da mensagem inicia com 2. Podendo ser 2xx, onde x pode ser qualquer número
+          if(status.toString()[0] === '2')
+            result.innerHTML += '<br/><br/><h3>Recurso salvo com sucesso</h3>'
+          else
+            result.innerHTML += `<br/><br/><h3>Erro ao tentar gravar ontologia</h3>`
+        //Este bloco trata o evento da conexão estar indisponível
+        }).catch(function(error) {
+            result.innerHTML += `<br/><br/><h3>Problema de conexão ao tentar salvar a ontologia<h3><br/><br/>${error.message}`
+          });
       }
 
       //Faz um recurso para ser enviado

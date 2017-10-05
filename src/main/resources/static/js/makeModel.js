@@ -12,10 +12,10 @@
         const result = document.getElementById('result');
 
         addVocab.addEventListener("click", function(){
-//            vocabs.push({
-//                uri: uri.value,
-//                prefix: prefix.value
-//            });
+            vocabs.push({
+                uri: uri.value,
+                prefix: prefix.value
+            });
             vocabList.innerText = JSON.stringify(vocabs, null, 2);
             updatePrefixList();
             updateResult();
@@ -35,10 +35,10 @@
         }
 
         addProp.addEventListener("click", function(){
-//            props.push({
-//                prefix: propPrefix.value,
-//                name: propName.value
-//            });
+            props.push({
+                prefix: propPrefix.value,
+                name: propName.value
+            });
             propList.innerText = JSON.stringify(props, null, 2);
             updateResult();
         });
@@ -55,7 +55,6 @@
     >
         <rdf:Description>
             ${propsString}
-
         </rdf:Description>
     </rdf>`;
             result.innerText = rdf;
@@ -82,11 +81,6 @@
 
         updateResult();
 
-
-
-
-
     }
 ()
 )
-
