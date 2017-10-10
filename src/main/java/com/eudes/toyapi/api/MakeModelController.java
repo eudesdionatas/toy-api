@@ -7,11 +7,9 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -19,7 +17,7 @@ import java.util.UUID;
 public class MakeModelController {
 
     private final String fusekiURI = "http://localhost:3030/Teste";
-    private final String graphURI = "/coisinhas";
+    private final String graphURI = "/ontologias";
     private DatasetAccessor datasetAccessor = null;
 
     MakeModelController() {
@@ -32,8 +30,15 @@ public class MakeModelController {
         Model model = createModel(resource);
         addAsResource(model, resource);
         model.write(System.out);
+
         datasetAccessor.add(graphURI, model);
         return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/vocabularyData")
+    public ResponseEntity<List<Object>> getVocabularyData(){
+
+        return null;
     }
 
     private void addAsResource(Model model, Resource resource) {

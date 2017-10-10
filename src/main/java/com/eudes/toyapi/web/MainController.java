@@ -17,8 +17,13 @@ public class MainController {
     }
 
     @GetMapping("/SaveFromModelRDF")
-    public String saveRDF3() {
+    public String saveFromRDFModel() {
         return "saveFromModelRDF";
+    }
+
+    @GetMapping("/SaveFromModelRDF2")
+    public String saveFromRDFModel2() {
+        return "saveFromModelRDF2";
     }
 
     @GetMapping("/SaveRDF")

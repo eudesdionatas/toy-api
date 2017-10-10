@@ -19,7 +19,7 @@
 
       //Pega os campos de inserir os dados do vocabulário e atribui e atribui a variáveis
       const vocabURIField = document.getElementById('vocabUri')
-      const vocabPrefixField = document.getElementById('vocabPrefix')
+      const vocabularieField = document.getElementById('vocabularie')
 
       //Pega os campos de inserir os dados da propriedades e atribui e atribui a variáveis
       const propPrefixField = document.getElementById('propPrefix')
@@ -41,6 +41,7 @@
       }
 
       //Verifica se a função é válida
+      //Esta função está validando URLs e não URIs
       function isValidURL(uri){
         if (uri === '') return false;
         //Expressão regular para validar uma URL
@@ -83,7 +84,25 @@
       vocabURIField.onblur = validateField(isValidURL)
 
       //Trata o evento de 'perder o foco' do campo de prefixo do vocabulário, validando-o
-      vocabPrefixField.onblur = validateField(isNotEmpty)
+      vocabularieField.addEventListener('blur', validateField(isNotEmpty), false)
+      //Trata o evento de 'mudar o valor selecionado' do campo de prefixo do vocabulário, validando-o
+      vocabularieField.addEventListener('change', validateField(isNotEmpty), false)
+      //Trata o evento de 'mudar o valor selecionado' do campo de prefixo do vocabulário, carregando as informações do vocabulário escolhido
+      vocabularieField.addEventListener('change', (evt) => {
+        if (evt.target.value === 'dce') {vocabURIField.value = 'http://purl.org/dc/elements/1.1/'} else
+        if (evt.target.value === 'foaf') {vocabURIField.value = 'http://xmlns.com/foaf/0.1/'} else
+        if (evt.target.value === 'skos') {vocabURIField.value = 'http://www.w3.org/2004/02/skos/core'} else
+        if (evt.target.value === 'schema.org') {vocabURIField.value = 'http://schema.org/'} else
+        if (evt.target.value === 'prov') {vocabURIField.value = 'http://www.w3.org/ns/prov#'} else
+        if (evt.target.value === 'dcat') {vocabURIField.value = 'http://www.w3.org/ns/dcat'}
+
+        //Pegar os valores do vocabulário escolhido
+        fetch('/saveResource/getVocabularyData')
+          .then(function(data) {
+            return data.json()
+            console.log(data)
+          })
+      })
 
       //Trata o evento de 'perder o foco' do campo de nome da propriedade, validando-o
       propNameField.onblur = validateField(isNotEmpty)
@@ -103,25 +122,25 @@
 
       //Trata o evento de clique do botão de adicionar vocabulários 'addVocabButton'
       addVocabButton.onclick = () => {
-        if (isEmpty(vocabURIField.value) || isEmpty(vocabPrefixField.value)) return
+        if (isEmpty(vocabURIField.value) || isEmpty(vocabularieField.value)) return
 
-        //Pega o valor do campo de id vocabPrefix do primeiro formulário e atrabui a uma variável 'prefix'
-        const prefix = vocabPrefixField.value
-        //Pega o valor do campo de id vocabURI do primeiro formulário e atrabui a uma variável 'uri'
-        const uri = vocabURIField.value
-        if (!isValidURL(uri)){
-            return;
-         }
-        toggleValid(vocabURIField, true)
-        //Cria objeto 'vocab' com 'name', 'prefix' e uma lista de pares 'pairs'
-        const vocab = { prefix, uri, pairs: [] } // { prefix: prefix, uri: uri }
-        //Atribui o objeto 'vocab' (inicialmente sem pares) ao vocabulário de prefixo ('prefix'), do recurso
-        resource.vocabularies[prefix] = vocab
-        //Atualiza a lista de prefixos dos vocabulários usados no campo select
-        updatePrefixList()
-       //Mostra o recurso na tag '<pre>' de id 'result'
-        showResource()
-      }
+            //Pega o valor do campo de id vocabularie do primeiro formulário e atrabui a uma variável 'prefix'
+            const prefix = vocabularieField.value
+            //Pega o valor do campo de id vocabURI do primeiro formulário e atrabui a uma variável 'uri'
+            const uri = vocabURIField.value
+            if (!isValidURL(uri)){
+                return;
+             }
+            toggleValid(vocabURIField, true)
+            //Cria objeto 'vocab' com 'name', 'prefix' e uma lista de pares 'pairs'
+            const vocab = { prefix, uri, pairs: [] } // { prefix: prefix, uri: uri }
+            //Atribui o objeto 'vocab' (inicialmente sem pares) ao vocabulário de prefixo ('prefix'), do recurso
+            resource.vocabularies[prefix] = vocab
+            //Atualiza a lista de prefixos dos vocabulários usados no campo select
+            updatePrefixList()
+           //Mostra o recurso na tag '<pre>' de id 'result'
+            showResource()
+        }
 
       //Trata o evento de clique do botão de adicionar propriedades 'addPropButton'
       addPropButton.onclick = () => {
@@ -164,7 +183,7 @@
       //se os campos de prefixo do vocabulário, nome da propriedade e valor da propriedade não são vazios
       function validateForm(){
            return isValidURL(resAboutField.value) && isValidURL(vocabURIField.value) &&
-                  isNotEmpty(vocabPrefixField.value) && isNotEmpty(propNameField.value) && isNotEmpty(propValueField.value)
+                  isNotEmpty(vocabularieField.value) && isNotEmpty(propNameField.value) && isNotEmpty(propValueField.value)
       }
 
       //Função para mostrar o recurso na tag '<pre>' de id 'result'
@@ -200,7 +219,6 @@
         const resToSend = getResourceToSend()
         //Envia a cópia do recurso
 
-        console.log(resToSend)
         //Envia o conteúdo ao servidor
         fetch('/saveResource/process', {
           method: 'POST',

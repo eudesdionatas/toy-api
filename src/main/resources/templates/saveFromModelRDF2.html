@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Saving RDF</title>
+    <link rel="stylesheet" type="text/css" href="css/saveFromModelRDF.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+</head>
+<body>
+<h3 align="center">Criando e salvando instância de ontologia</h3>
+<div class="container">
+    <form id="resForm">
+        <div class="row">
+            <h4>Recurso</h4>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="resPrefix" placeholder="prefixo" data-toggle="tooltip" title="Insira um valor"/>
+                    <span class="input-group-addon">about</span>
+                    <input type="text" class="form-control" id="resAbout" placeholder="http://www.fre.dg/" data-toggle="tooltip" title="As URIs devem ser válidas: http://... terminando com / ou #"/>
+                    <span class="input-group-addon">#</span>
+                    <input type="text" class="form-control" id="resName" placeholder="nome"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h4>Vocabulários</h4>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">xmlns:</span>
+                    <!--A tootip de aviso para selecionar um valor no momento da validação não está aparecendo quando não é selecionado um valor-->
+                    <select class="form-control" id="vocabularie">
+                        <option value="" title="">Selecione um vocabulário</option>
+                        <option value="dce" title="dce">Dublin Core</option>
+                        <option value="foaf" title="foaf">FOAF</option>
+                        <option value="skos" title="skos">SKOS</option>
+                        <option value="schema.org" title="schema.org">Shema.org</option>
+                        <option value="prov" title="prov">PROV</option>
+                        <option value="dcat" title="dcat">DCAT</option>
+                    </select>
+                    <span class="input-group-addon">=</span>
+                    <input type="text" class="form-control" id="vocabUri" placeholder="http://www.foo.tz/" data-toggle="tooltip" title="As URIs devem ser válidas: http://... terminando com / ou #"/>
+                    <span class="input-group-btn">
+                        <button type="button" id="addVocab" class="btn btn-secondary">
+                          <span class="glyphicon glyphicon-plus"/>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h4>Propriedades</h4>
+            <div class="form-group">
+                <div class="input-group">
+                    <select class="form-control" id="propPrefix"></select>
+                    <div class="input-group-addon">:</div>
+                    <input type="text" class="form-control" id="propName" placeholder="nome" data-toggle="tooltip" title="Insira um valor"/>
+                    <div class="input-group-addon">=</div>
+                    <input type="text" class="form-control" id="propValue" placeholder="valor" data-toggle="tooltip" title="Insira um valor"/>
+                    <div class="input-group-btn">
+                        <button type="button" id="addProp" class="btn btn-secondary">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button type="button" id="save" class="btn btn-secondary btn-lg">
+                <span class="glyphicon glyphicon-upload"></span>
+                Salvar
+            </button>
+        </div>
+    </form>
+    <pre id="result"></pre>
+</div>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script src="js/saveFromModelRDF2.js"></script>
+</body>
+</html>
