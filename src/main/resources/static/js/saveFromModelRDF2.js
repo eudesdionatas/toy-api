@@ -19,7 +19,7 @@
 
       //Pega os campos de inserir os dados do vocabulário e atribui e atribui a variáveis
       const vocabURIField = document.getElementById('vocabUri')
-      const vocabularieField = document.getElementById('vocabularie')
+      const vocabulariePrefixField = document.getElementById('vocabPrefix')
 
       //Pega os campos de inserir os dados da propriedades e atribui e atribui a variáveis
       const propPrefixField = document.getElementById('propPrefix')
@@ -84,26 +84,59 @@
       vocabURIField.onblur = validateField(isValidURL)
 
       //Trata o evento de 'perder o foco' do campo de prefixo do vocabulário, validando-o
-      vocabularieField.addEventListener('blur', validateField(isNotEmpty), false)
+      vocabulariePrefixField.addEventListener('blur', validateField(isNotEmpty), false)
       //Trata o evento de 'mudar o valor selecionado' do campo de prefixo do vocabulário, validando-o
-      vocabularieField.addEventListener('change', validateField(isNotEmpty), false)
-      //Trata o evento de 'mudar o valor selecionado' do campo de prefixo do vocabulário, carregando as informações do vocabulário escolhido
-      vocabularieField.addEventListener('change', (evt) => {
-        if (evt.target.value === 'dce') {vocabURIField.value = 'http://purl.org/dc/elements/1.1/'} else
-        if (evt.target.value === 'foaf') {vocabURIField.value = 'http://xmlns.com/foaf/0.1/'} else
-        if (evt.target.value === 'skos') {vocabURIField.value = 'http://www.w3.org/2004/02/skos/core'} else
-        if (evt.target.value === 'schema.org') {vocabURIField.value = 'http://schema.org/'} else
-        if (evt.target.value === 'prov') {vocabURIField.value = 'http://www.w3.org/ns/prov#'} else
-        if (evt.target.value === 'dcat') {vocabURIField.value = 'http://www.w3.org/ns/dcat'}
+      vocabulariePrefixField.addEventListener('change', validateField(isNotEmpty), false)
 
-        //Pegar os valores do vocabulário escolhido
-        fetch('/saveResource/getVocabularyData')
-          .then(function(data) {
-            return data.json()
-            console.log(data)
-          })
+      const vocabs = {
+        cc: 'http://creativecommons.org/ns',
+        dcat: 'http://www.w3.org/ns/dcat#',
+        dce: 'http://purl.org/dc/elements/1.1/',
+        dcterms: 'http://purl.org/dc/terms/',
+        event: 'http://purl.org/NET/c4dm/event.owl#',
+        foaf: 'http://xmlns.com/foaf/0.1/',
+        prov: 'http://www.w3.org/ns/prov#',
+        vcard: 'http://www.w3.org/2006/vcard/ns',
+        schema: 'http://schema.org/',
+        skos: 'http://www.w3.org/2004/02/skos/core',
+        geo: 'http://www.w3.org/2003/01/geo/wgs84_pos#'
+      }
+
+      //Trata o evento de 'mudar o valor selecionado' do campo de prefixo do vocabulário, carregando as informações do vocabulário escolhido
+      vocabulariePrefixField.addEventListener('change', (evt) => {
+        vocabURIField.value = vocabs[evt.target.value]
       })
 
+      propPrefixField.addEventListener('change', (evt) => {
+          //Pegar os valores do vocabulário escolhido
+          fetch('/saveResource/getVocabularyData?'+ $.param({vocabPrefix: propPrefixField.value}))
+          .then(function(data) {
+            return data.json()
+          }).then(function(predicates) {
+            console.log(predicates)
+          })    
+      })
+
+      $('#propName').select2({ 
+        ajax: { 
+          url: '/saveResource/getVocabularyData',
+          dataType: 'json',  
+          data: function (params) { 
+            // Query parameters will be ?vocabPrefix=[propPrefixField.value]&search=[term]&type=public 
+            var query = {vocabPrefix: propPrefixField.value, search: params.term}
+            return query; 
+          },
+          processResults: function (data) {
+            // Tranforms the top-level key of the response object from 'items' to 'results'
+            const items = data.map(prop => ({ id: prop, text: prop }))
+            return { results: items};
+          },
+          cache: true                
+        },
+        placeholder: 'Digite as iniciais da propriedade',
+        theme: 'bootstrap'
+      });
+      
       //Trata o evento de 'perder o foco' do campo de nome da propriedade, validando-o
       propNameField.onblur = validateField(isNotEmpty)
 
@@ -122,10 +155,10 @@
 
       //Trata o evento de clique do botão de adicionar vocabulários 'addVocabButton'
       addVocabButton.onclick = () => {
-        if (isEmpty(vocabURIField.value) || isEmpty(vocabularieField.value)) return
+        if (isEmpty(vocabURIField.value) || isEmpty(vocabulariePrefixField.value)) return
 
             //Pega o valor do campo de id vocabularie do primeiro formulário e atrabui a uma variável 'prefix'
-            const prefix = vocabularieField.value
+            const prefix = vocabulariePrefixField.value
             //Pega o valor do campo de id vocabURI do primeiro formulário e atrabui a uma variável 'uri'
             const uri = vocabURIField.value
             if (!isValidURL(uri)){
@@ -183,7 +216,7 @@
       //se os campos de prefixo do vocabulário, nome da propriedade e valor da propriedade não são vazios
       function validateForm(){
            return isValidURL(resAboutField.value) && isValidURL(vocabURIField.value) &&
-                  isNotEmpty(vocabularieField.value) && isNotEmpty(propNameField.value) && isNotEmpty(propValueField.value)
+                  isNotEmpty(vocabulariePrefixField.value) && isNotEmpty(propNameField.value) && isNotEmpty(propValueField.value)
       }
 
       //Função para mostrar o recurso na tag '<pre>' de id 'result'
@@ -253,14 +286,16 @@
       //Função para atualizar a lista de prefixos do campo select de prefixos dos vocabulários usados
       function updatePrefixList() {
         //Object.keys pega a lista de prefixos dos vocabulários do recurso
-        //A função map itera sobre a lista de prefixos dos vocabulários
+        //A função map itera sobre a lista de prefhixos dos vocabulários
         //Cada chave da lista de 'prefix' é passada como parâmetro para a função anônima que retorna a string dentro da crase `...`
         //A string detro da crase aceita string e variáveis, que podem ser acessadas com a seguinte sintaxe ${variavel}
-        const options = Object.keys(resource.vocabularies).map(prefix => (
+        const prefixes = Object.keys(resource.vocabularies) 
+        const options = prefixes.map(prefix => (
           `<option value="${prefix}">${prefix}</option>`
         ))
         //Atualiza lista de prefixos do campo select de id 'propPrefix'
         resForm.elements.propPrefix.innerHTML = options
+        resForm.elements.propPrefix.value = prefixes[prefixes.length - 1]
       }
 
         //Mostra o RDF, essa função é chamada para montar o conteúdo a ser mostrado na tag '<pre>'
@@ -305,6 +340,5 @@
             //Deve ser usado innerText para apresentar o texto e não o html na página
             result.innerText = rdf;
         }
-
-
-}())
+}()
+)

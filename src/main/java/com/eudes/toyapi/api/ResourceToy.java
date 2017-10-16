@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Resource {
+public class ResourceToy {
 
     private String about;
     private String prefix;
