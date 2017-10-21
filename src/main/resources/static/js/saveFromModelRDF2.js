@@ -89,16 +89,16 @@
       vocabulariePrefixField.addEventListener('change', validateField(isNotEmpty), false)
 
       const vocabs = {
-        cc: 'http://creativecommons.org/ns',
+        cc: 'http://creativecommons.org/ns#',
         dcat: 'http://www.w3.org/ns/dcat#',
         dce: 'http://purl.org/dc/elements/1.1/',
         dcterms: 'http://purl.org/dc/terms/',
         event: 'http://purl.org/NET/c4dm/event.owl#',
         foaf: 'http://xmlns.com/foaf/0.1/',
         prov: 'http://www.w3.org/ns/prov#',
-        vcard: 'http://www.w3.org/2006/vcard/ns',
+        vcard: 'http://www.w3.org/2006/vcard/ns#',
         schema: 'http://schema.org/',
-        skos: 'http://www.w3.org/2004/02/skos/core',
+        skos: 'http://www.w3.org/2004/02/skos/core#',
         geo: 'http://www.w3.org/2003/01/geo/wgs84_pos#'
       }
 
@@ -126,10 +126,13 @@
             var query = {vocabPrefix: propPrefixField.value, search: params.term}
             return query; 
           },
+          // Tranforms the top-level key of the response object from 'items' to 'results'
           processResults: function (data) {
-            // Tranforms the top-level key of the response object from 'items' to 'results'
-            const items = data.map(prop => ({ id: prop, text: prop }))
-            return { results: items};
+            items = data
+            //Coloca a estrutura do JSON da forma correta para não ter <OptGroup></OptGroup>
+            //const items = data.map(prop => ({ id: prop, text: prop }))
+            return {results: items};
+
           },
           cache: true                
         },
