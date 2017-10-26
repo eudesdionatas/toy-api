@@ -1,4 +1,4 @@
-package com.eudes.toyapi;
+package com.eudes.semanticApi;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

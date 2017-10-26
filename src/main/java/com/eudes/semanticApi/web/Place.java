@@ -1,4 +1,4 @@
-package com.eudes.toyapi.web;
+package com.eudes.semanticApi.web;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -147,14 +147,23 @@
       propValueField.onblur = validateField(isNotEmpty)
 
       //Trata o evento de 'perder o foco' do campo de inserir o prefixo do recurso passando a referência da função showResource para o evento 'onblur'
-      resPrefixField.onblur = showResource
+      resPrefixField.addEventListener('blur', showResource)
+
+      resPrefixField.addEventListener('blur', validateField(isNotEmpty))
 
       //Trata o evento de 'perder o foco' do campo de inserir a URI do recurso passando a referência da função showResource para o evento 'onblur'
       //Usa .addEventListener para adidionar mais de uma função ao mesmo evento
-      resAboutField.addEventListener('blur', showResource, false)
+      resAboutField.addEventListener('blur', showResource)
 
       //Trata o evento de 'perder o foco' do campo de inserir o nome do recurso passando a referência da função showResource para o evento 'onblur'
-      resNameField.onblur = showResource
+      resNameField.addEventListener('blur', showResource)
+
+      resNameField.addEventListener('blur', validateField(isNotEmpty))
+
+      propPrefixField.addEventListener('blur', validateField(isNotEmpty))
+
+      $(propNameField).on('select2:close', validateField(isNotEmpty))
+
 
       //Trata o evento de clique do botão de adicionar vocabulários 'addVocabButton'
       addVocabButton.onclick = () => {
@@ -260,12 +269,12 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json; charset=utf-8'},
           body: JSON.stringify(resToSend)
-        }).then(function(status) {
+        }).then(function(response) {
           //Verifica se o status da mensagem inicia com 2. Podendo ser 2xx, onde x pode ser qualquer número
-          if(status.toString()[0] === '2')
+          if(response.ok)
             result.innerHTML += '<br/><br/><h3>Recurso salvo com sucesso</h3>'
           else
-            result.innerHTML += `<br/><br/><h3>Erro ao tentar gravar ontologia</h3><br/>${status.message}`
+            result.innerHTML += `<br/><br/><h3>Erro ao tentar gravar ontologia</h3><br/>${status}<br/>${status.message}</br>${status.toString}`
         //Este bloco trata o evento da conexão estar indisponível
         }).catch(function(error) {
             result.innerHTML += `<br/><br/><h3>Problema de conexão ao tentar salvar a ontologia<h3><br/><br/>${error.message}`

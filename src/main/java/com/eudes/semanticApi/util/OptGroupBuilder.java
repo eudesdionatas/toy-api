@@ -1,8 +1,8 @@
-package com.eudes.toyapi.util;
+package com.eudes.semanticApi.util;
 
 
-import com.eudes.toyapi.api.OptGroup;
-import com.eudes.toyapi.api.Option;
+import com.eudes.semanticApi.api.OptGroup;
+import com.eudes.semanticApi.api.Option;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
@@ -17,8 +17,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Classe responsável por ler os dados do vocabulário
+ * @author Eudes Souza
+ * @since 10/2017
+ */
 public class OptGroupBuilder {
 
+    /**
+     * Método responsável por construir um Map contendo OptGroup's onde cada OptGroup mantém o título (text) do grupo de
+     * propriedades e uma lista de propriedades (children)
+     * @param vocabUri String com a URI do vocaulário
+     * @param vocabFilePath String com o caminho do vocabulário a ser lido
+     * @param search String com o termo de busca
+     * @return Map de OptGroup's de propriedades do vocabulário
+     */
     public Map<String, OptGroup> build(String vocabUri, String vocabFilePath, String search) {
         RIOT.init();
         InputStream vocabInputStream = getClass().getResourceAsStream(vocabFilePath);
@@ -34,7 +47,7 @@ public class OptGroupBuilder {
 
             Resource resource = typeStmt.getResource();
             String typeResourceUri = resource.getURI();
-            System.out.println(typeResourceUri);
+//            System.out.println(typeResourceUri);
             if (!isPropertyResource(typeResourceUri)) return;
 
             String property = res.getURI().replace(vocabUri, "");
@@ -60,10 +73,22 @@ public class OptGroupBuilder {
         return optGroupMap;
     }
 
+    /**
+     * Método responsável por construir a lista de propriedades sem considerar algum termo de busca
+     * @param vocabUri String contendo a URI do vocabulário a ser lido
+     * @param vocabFilePath String contendo o caminho do vocabulário a ser lido
+     * @return Map de OptGroup's de propriedades do vocabulário
+     */
     public Map<String, OptGroup> build(String vocabUri, String vocabFilePath) {
         return  build(vocabUri, vocabFilePath, null);
     }
 
+    /**
+     * Método responsável por analisar se o dado (recurso) lido no vocabulário é uma propriedade
+     * @param uri String contendo a URI do recurso do vocabulário a ser a analisada
+     * @return Retorna um booleano com o valor true quando a URI for igual a uma das constantes RDF.Property, OWL.DatatypeProperty
+     * ou OWL.ObjectProperty. É retornado falso caso contrário
+     */
     private boolean isPropertyResource(String uri) {
         return RDF.Property.getURI().equals(uri)
                 || OWL.DatatypeProperty.getURI().equals(uri)

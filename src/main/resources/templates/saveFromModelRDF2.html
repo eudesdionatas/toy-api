@@ -16,10 +16,9 @@
             <h4>Recurso</h4>
             <div class="form-group">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="resPrefix" placeholder="prefixo" data-toggle="tooltip"
-                           title="Insira um valor"/>
+                    <input type="text" class="form-control" id="resPrefix" placeholder="prefixo" data-toggle="tooltip" title="Insira um valor"/>
                     <span class="input-group-addon">:</span>
-                    <input type="text" class="form-control" id="resName" placeholder="nome"/>
+                    <input title="Insira um valor" data-toggle="tooltip" type="text" class="form-control" id="resName" placeholder="nome"/>
                     <span class="input-group-addon">about</span>
                     <input style="width: 310px" type="text" class="form-control" id="resAbout" placeholder="http://www.fre.dg/"
                            data-toggle="tooltip" title="As URIs devem ser válidas: http://... terminando com / ou #"/>
@@ -47,8 +46,8 @@
                         <option value="geo">GEO</option>
                     </select>
                     <span class="input-group-addon">=</span>
-                    <input style="width: 300px" type="text" class="form-control" id="vocabUri" placeholder="http://www.foo.tz/"
-                           data-toggle="tooltip" title="As URIs devem ser válidas: http://... terminando com / ou #"/>
+                    <input readonly="readonly" style="width: 300px" type="text" class="form-control" id="vocabUri" placeholder="http://www.foo.tz/"
+                           data-toggle="tooltip" title="As URIs devem ser válidas: http://... terminando com / ou #" tabindex="-1"/>
                     <span class="input-group-btn">
                         <button type="button" id="addVocab" class="btn btn-secondary">
                           <span class="glyphicon glyphicon-plus"/>
@@ -61,11 +60,11 @@
             <h4>Propriedades</h4>
             <div class="form-group">
                 <div class="input-group">
-                    <select class="form-control" style="width: 150px" id="propPrefix"></select>
+                    <select data-toggle="tooltip" title="Selecione um valor" class="form-control" style="width: 150px" id="propPrefix"></select>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">:</span>
-                    <select class="form-control select2-single" id="propName" style="width:290px"></select>
+                    <select data-toggle="tooltip" title="Selecione um valor" class="form-control select2-single" id="propName" style="width:290px"></select>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">=</span>

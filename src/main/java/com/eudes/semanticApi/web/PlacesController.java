@@ -1,4 +1,4 @@
-package com.eudes.toyapi.web;
+package com.eudes.semanticApi.web;
 
 import org.apache.jena.query.DatasetAccessor;
 import org.apache.jena.query.DatasetAccessorFactory;

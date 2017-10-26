@@ -1,8 +1,8 @@
-package com.eudes.toyapi;
+package com.eudes.semanticApi;
 
 
-import com.eudes.toyapi.api.OptGroup;
-import com.eudes.toyapi.util.OptGroupBuilder;
+import com.eudes.semanticApi.api.OptGroup;
+import com.eudes.semanticApi.util.OptGroupBuilder;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.junit.Ignore;
