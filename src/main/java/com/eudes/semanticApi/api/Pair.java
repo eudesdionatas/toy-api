@@ -1,23 +1,34 @@
 package com.eudes.semanticApi.api;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
- * Classe que é usada para definir a estrutura do par (predicado, valor) definido pelo cliente em formato JSON
+ * Class that is used to define the structure of the pair (predicate, value) defined by the client in JSON format
  * @author Eudes Souza
  * @since 10/2017
  */
 @Data
+@AllArgsConstructor
 public class Pair {
 
     /**
-     * Nome do predicado
+     * Predicate name
      */
     private String propertyName;
+
     /**
-     * Valor do predicado
+     * Predicate value
      */
     private String value;
 
+    /**
+     * Flag to verify the representation of the resource
+     */
+    private boolean asResource;
 
+    /**
+     * String that contains the name of the property to which this property belongs
+     */
+    private String subPropertyOf;
 }

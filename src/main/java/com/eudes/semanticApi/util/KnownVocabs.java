@@ -3,7 +3,7 @@ package com.eudes.semanticApi.util;
 import lombok.Getter;
 
 /**
- * Classe que mantém toda URI e caminho de cada vocabulário do sistema:
+ * Class that holds the entire URI and path of each system vocabulary:
  * <br>CC, DCAT, DCE, DCE, DCTERMS, EVENT, FOAF, PROV, VCARD, Schema.org, SKOS e GEO
  * @author Eudes Souza
  * @since 10/2017
@@ -23,7 +23,7 @@ public enum KnownVocabs {
     GEO("geo", "http://www.w3.org/2003/01/geo/wgs84_pos#", "/vocabularies/wgs84_pos.rdf");
 
     /**
-     * String que mantem prefixo do vocabulário
+     * String that holds vocabulary prefix
      */
     private final String prefix;
     /**
@@ -31,15 +31,15 @@ public enum KnownVocabs {
      */
     private final String uri;
     /**
-     * String que mantem o caminho do vocabulário no sistema
+     * String that keeps the vocabulary path in the system
      */
     private final String filePath;
 
     /**
-     * Contrutor que seta prefixo, URI e caminho do vocabulário
-     * @param prefix String que mantém o prefixo do vocabulário
-     * @param uri String que mantém a URI do vocabulário
-     * @param filePath String que mantém o caminho do vocabulário
+     * Constructor that assigns prefix, URI and vocabulary path
+     * @param prefix String that holds the vocabulary prefix
+     * @param uri String that holds the vocabulary URI
+     * @param filePath String that holds the vocabulary path
      */
     KnownVocabs(String prefix, String uri, String filePath) {
         this.prefix = prefix;

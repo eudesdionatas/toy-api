@@ -15,13 +15,13 @@ import lombok.Data;
 @AllArgsConstructor
 public class Option {
     /**
-     * String que mantem o id da opção
+     * String holding the option id
      */
-    @ApiModelProperty(notes = "Identificador do predicado")
+    @ApiModelProperty(notes = "Predicate identifier")
     private String id;
     /**
-     * String que mantem o texto da opção
+     * String holding option text
      */
-    @ApiModelProperty(notes = "Texto da opção")
+    @ApiModelProperty(notes = "Option text")
     private String text;
 }

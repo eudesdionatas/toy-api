@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe que é usada para definir a estrutura do recurso definido pelo cliente em formato JSON
+ * Class that is used to define the structure of the client-defined resource in JSON format
  * @author Eudes Souza
  * @since 10/2017
  */
@@ -18,7 +18,7 @@ import java.util.List;
 public class ResourceApi {
 
     /**
-     * URI do recurso criado
+     * URI of the created resource
      */
     private String about;
     /**
@@ -26,11 +26,11 @@ public class ResourceApi {
      */
     private String prefix;
     /**
-     * Nome do recurso criado
+     * Created resource name
      */
     private String name;
     /**
-     * Lista dos vocabulários usados no recurso criado
+     * List of vocabularies used in the created resource
      */
     List<Vocabulary> vocabularies = new ArrayList<>();
 

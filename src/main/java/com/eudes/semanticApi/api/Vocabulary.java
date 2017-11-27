@@ -1,28 +1,32 @@
 package com.eudes.semanticApi.api;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe que é usada para definir a estrutura do vocabulário definido pelo cliente em formato JSON
+ * Class that is used to define the vocabulary structure defined by the client in JSON format
  * @author Eudes Souza
  * @since 10/2017
  */
 @Data
+@AllArgsConstructor
 public class Vocabulary {
 
     /**
-     * URI do vocabulário
+     * Vocabulary URI
      */
     private String uri;
     /**
-     * Prefixo do vocabulário
+     * Vocabulary prefix
      */
     private String prefix;
     /**
-     * Lista de Pair - diferentes valores para (predicado, valor)
+     * List of Pair - different values for (predicate, value)
      */
     private List<Pair> pairs = new ArrayList<>();
+
+
 }

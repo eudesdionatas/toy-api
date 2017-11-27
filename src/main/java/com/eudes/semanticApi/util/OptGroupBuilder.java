@@ -18,19 +18,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Classe responsável por ler os dados do vocabulário
+ * Class responsible for reading the vocabulary data
  * @author Eudes Souza
  * @since 10/2017
  */
 public class OptGroupBuilder {
 
     /**
-     * Método responsável por construir um Map contendo OptGroup's onde cada OptGroup mantém o título (text) do grupo de
-     * propriedades e uma lista de propriedades (children)
-     * @param vocabUri String com a URI do vocaulário
-     * @param vocabFilePath String com o caminho do vocabulário a ser lido
-     * @param search String com o termo de busca
-     * @return Map de OptGroup's de propriedades do vocabulário
+     * Method responsible for constructing a Map containing OptGroup's where each OptGroup maintains the title (text) of the group of properties and a list of properties (children)
+     * @param vocabUri String with the URI of the vocabulary
+     * @param vocabFilePath String with the vocabulary path to be read
+     * @param search String with search term
+     * @return Map of OptGroup's vocabulary properties
      */
     public Map<String, OptGroup> build(String vocabUri, String vocabFilePath, String search) {
         RIOT.init();
@@ -74,24 +73,25 @@ public class OptGroupBuilder {
     }
 
     /**
-     * Método responsável por construir a lista de propriedades sem considerar algum termo de busca
-     * @param vocabUri String contendo a URI do vocabulário a ser lido
-     * @param vocabFilePath String contendo o caminho do vocabulário a ser lido
-     * @return Map de OptGroup's de propriedades do vocabulário
+     * Method responsible for building the list of properties without considering any search term
+     * @param vocabUri String containing the URI of the vocabulary to be read
+     * @param vocabFilePath String containing the vocabulary path to be read
+     * @return Map of OptGroup's vocabulary properties
      */
     public Map<String, OptGroup> build(String vocabUri, String vocabFilePath) {
         return  build(vocabUri, vocabFilePath, null);
     }
 
     /**
-     * Método responsável por analisar se o dado (recurso) lido no vocabulário é uma propriedade
-     * @param uri String contendo a URI do recurso do vocabulário a ser a analisada
-     * @return Retorna um booleano com o valor true quando a URI for igual a uma das constantes RDF.Property, OWL.DatatypeProperty
-     * ou OWL.ObjectProperty. É retornado falso caso contrário
+     * Method responsible for analyzing whether the data (resource) read in the vocabulary is a property
+     * @param uri String containing the URI of the vocabulary resource to be parsed
+     * @return Returns a boolean with a value of true when the URI equals one of the RDF.Property constants, OWL.DatatypeProperty
+     * or OWL.ObjectProperty. It is returned false otherwise
      */
     private boolean isPropertyResource(String uri) {
         return RDF.Property.getURI().equals(uri)
                 || OWL.DatatypeProperty.getURI().equals(uri)
                 || OWL.ObjectProperty.getURI().equals(uri);
     }
+
 }

@@ -21,9 +21,9 @@ public class MainController {
         return "saveFromModelRDF";
     }
 
-    @GetMapping("/SaveFromModelRDF2")
+    @GetMapping("/SemanticApiInterface")
     public String saveFromRDFModel2() {
-        return "saveFromModelRDF2";
+        return "semanticApiInterface";
     }
 
     @GetMapping("/SaveRDF")
